@@ -1,67 +1,80 @@
-// ========================================
-// MY BOT WEBSITE JAVASCRIPT
-// ========================================
+// ======================================
+// Sk1.0 WEBSITE
+// ======================================
 
 
-// Page load animation
+// COPY COMMAND
 
-document.addEventListener("DOMContentLoaded", () => {
+function copyCommand(command) {
 
-    console.log("🤖 MY BOT website loaded successfully!");
+    navigator.clipboard.writeText(command)
+        .then(() => {
 
-});
+            showToast(command + " copied!");
+
+        })
+        .catch(() => {
+
+            showToast("Copy failed");
+
+        });
+}
 
 
-// Button click effect
+// TOAST
 
-const buttons = document.querySelectorAll(
-    ".primary-button, .secondary-button, .nav-button"
-);
+function showToast(message) {
 
-buttons.forEach(button => {
+    const toast = document.getElementById("toast");
 
-    button.addEventListener("click", () => {
+    toast.textContent = message;
 
-        console.log("Button clicked:", button.innerText);
+    toast.classList.add("show");
+
+    setTimeout(() => {
+
+        toast.classList.remove("show");
+
+    }, 1800);
+}
+
+
+// COMMAND SEARCH
+
+const searchInput =
+    document.getElementById("commandSearch");
+
+const commands =
+    document.querySelectorAll(".command");
+
+
+searchInput.addEventListener("input", () => {
+
+    const search =
+        searchInput.value.toLowerCase().trim();
+
+
+    commands.forEach(command => {
+
+        const text =
+            command.innerText.toLowerCase();
+
+
+        if (text.includes(search)) {
+
+            command.style.display = "flex";
+
+        } else {
+
+            command.style.display = "none";
+
+        }
 
     });
 
 });
 
 
-// Simple scroll animation
+// PAGE LOAD
 
-const cards = document.querySelectorAll(".feature-card");
-
-const observer = new IntersectionObserver(
-    (entries) => {
-
-        entries.forEach(entry => {
-
-            if (entry.isIntersecting) {
-
-                entry.target.style.opacity = "1";
-                entry.target.style.transform = "translateY(0)";
-
-            }
-
-        });
-
-    },
-    {
-        threshold: 0.15
-    }
-);
-
-
-cards.forEach(card => {
-
-    card.style.opacity = "0";
-
-    card.style.transform = "translateY(30px)";
-
-    card.style.transition = "0.6s ease";
-
-    observer.observe(card);
-
-});
+console.log("🤖 Sk1.0 website loaded successfully!");
